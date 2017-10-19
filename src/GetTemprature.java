@@ -6,8 +6,20 @@ import java.util.regex.Pattern;
 public class GetTemprature {
 	boolean debag = false;
 
-	Calendar cal = Calendar.getInstance();
+	//初期値
+	private String precNoInt = "";
+	private String blockNoInt = "";
 
+	public GetTemprature(String PrecNo, String BlockNo){
+		precNoInt = PrecNo;
+		blockNoInt = BlockNo;
+	}
+
+	private Calendar cal = Calendar.getInstance();
+
+	//一年分の気温を取得
+	//input:year
+	//output:年月日時、気温
 	String[][] getTemp(int year){
 		//データがないときは「///」が入っている
 		int allMonthDay =0;
@@ -17,19 +29,17 @@ public class GetTemprature {
 		String returnData[][] = new String[allMonthDay*24][5];
 
 		int count =0;
-		for(int i = 0;i<12;i++){
+		for(int i = 0;i<12;i++){//一年分繰り返し
 			int monthday = getMonthMaxDay(year ,(i+1));//繰り返しのための月の最大日を取得
-			for(int j =0;j< monthday;j++){
-				String url ="http://www.data.jma.go.jp/obd/stats/etrn/view/hourly_a1.php?prec_no=43&block_no=0363&"
+			for(int j =0;j< monthday;j++){//各月の日数
+				String url ="http://www.data.jma.go.jp/obd/stats/etrn/view/hourly_a1.php?prec_no="+precNoInt+"&block_no="+blockNoInt+"&"
 						+ "year="+year
 						+ "&month="+(i+1)
 						+ "&day="+(j+1)
 						+ "&view=";
 
-				/*
-				 * html の103行目から126行目が気象情報
-				 *左から130文字目から気温
-				 * */
+//				html の103行目から126行目が気象情報
+//				左から130文字目から気温
 				List datalist = new Httpcom().getWeb(url);
 				String temp;
 				Pattern pattern = Pattern.compile(">.*[0-9]<");

@@ -1,20 +1,23 @@
 public class TempratureAnalysis {
 	static boolean debag = false;
 	static int startYear = 1978;
-	static int endYear = 2016;
+	static int endYear = 2015;
+
+	//埼玉県さいたま市のユニークナンバー
+	static String precNo = "43";
+	static String blockNo = "0363";
 
 
 	public static void main(String args[]){
 		long start = System.currentTimeMillis();
 
-		/*1978年2015年までの埼玉の気温情報を取得*/
-		GetTemprature getTemprature =new GetTemprature();
-		for(int i=1978;i<=2015;i++){
-			String[][] data = getTemprature.getTemp(i);
-			new StoreData("./data/"+i+".csv").outputCsv(data);
+		//1978年2015年までの埼玉の気温情報を取得
+		GetTemprature getTemprature = new GetTemprature(precNo, blockNo);
+		StoreData store = new StoreData();
+		for(int i=startYear;i<=endYear;i++){
+			store.outputCsv("./data/"+i+".csv", getTemprature.getTemp(i));
 		}
-			System.out.println("finish");
-			System.out.println(System.currentTimeMillis()-start);
+		System.out.println(System.currentTimeMillis()-start);
 	}
 
 	// connect array

@@ -11,18 +11,12 @@ import java.sql.Statement;
 
 
 public class StoreData {
-	//output file name
-	String fn = "";
-	PrintWriter pw;
+	private PrintWriter pw;
 
-	public StoreData(String FileName){
-		fn = FileName;
-	}
-
-	void outputCsv(double Data[][]){
-		if(fn.indexOf(".csv") != -1){
+	void outputCsv(String FileName, double Data[][]){
+		if(FileName.indexOf(".csv") != -1){
 			try {
-				pw = new PrintWriter(new FileWriter(fn, false));
+				pw = new PrintWriter(new FileWriter(FileName, false));
 
 				for(int i=0;i<Data.length;i++){
 					pw.print(i+1);
@@ -43,10 +37,10 @@ public class StoreData {
 		}
 	}
 
-	void outputCsv(String Data[][]){
-		if(fn.indexOf(".csv") != -1){
+	void outputCsv(String FileName, String Data[][]){
+		if(FileName.indexOf(".csv") != -1){
 			try {
-				pw = new PrintWriter(new FileWriter(fn, false));
+				pw = new PrintWriter(new FileWriter(FileName, false));
 
 				for(int i=0;i<Data.length;i++){
 					pw.print(i+1);
