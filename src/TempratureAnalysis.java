@@ -1,7 +1,8 @@
 public class TempratureAnalysis {
 	static boolean debag = false;
-	static int startYear = 1978;
-	static int endYear = 2015;
+	//1978
+	static int startYear = 2013;
+	static int endYear = 2013;
 
 	//埼玉県さいたま市のユニークナンバー
 	static String precNo = "43";

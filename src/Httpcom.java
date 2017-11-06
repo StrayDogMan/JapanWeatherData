@@ -32,9 +32,9 @@ class Httpcom{
 	}
 
 	//get web page
-	List getWeb(String url){
+	List<String> getWeb(String url){
 		openWeb(url);
-		List dataList = new ArrayList();
+		List<String> dataList = new ArrayList<String>();
 		try{
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 

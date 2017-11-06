@@ -28,53 +28,42 @@ public class GetTemprature {
 		}
 		String returnData[][] = new String[allMonthDay*24][5];
 
-		int count =0;
+		int count =0;//ID
+		String url;//url
+		Matcher matcher;
+		String temp;
 		for(int i = 0;i<12;i++){//一年分繰り返し
-			int monthday = getMonthMaxDay(year ,(i+1));//繰り返しのための月の最大日を取得
-			for(int j =0;j< monthday;j++){//各月の日数
-				String url ="http://www.data.jma.go.jp/obd/stats/etrn/view/hourly_a1.php?prec_no="+precNoInt+"&block_no="+blockNoInt+"&"
+//			monthday = ;//繰り返しのための月の最大日を取得
+			for(int j =0;j< getMonthMaxDay(year ,(i+1));j++){//各月の日数
+				url ="http://www.data.jma.go.jp/obd/stats/etrn/view/hourly_a1.php?prec_no="+precNoInt+"&block_no="+blockNoInt+"&"
 						+ "year="+year
 						+ "&month="+(i+1)
 						+ "&day="+(j+1)
 						+ "&view=";
 
+				List<String> datalist = new Httpcom().getWeb(url);
 //				html の103行目から126行目が気象情報
 //				左から130文字目から気温
-				List datalist = new Httpcom().getWeb(url);
-				String temp;
-				Pattern pattern = Pattern.compile(">.*[0-9]<");
-				Matcher matcher;
 				for(int k = 0; k<24;k++){//24時間分
+
 					//正規表現にて気温情報だけ抽出
 					temp =datalist.get(102+k).toString().substring(120, 137);
-					matcher = pattern.matcher(temp);
+					matcher = Pattern.compile(">.[0-9]*.[0-9]").matcher(temp);
 					if(matcher.find()){
-						temp = matcher.group();
-						switch (temp.length()) {
-						case 5:
-							temp =temp.substring(1, 4);
-							break;
-						case 6:
-							temp =temp.substring(1, 5);
-							break;
-						case 7://「 )」などが紛れている場合があるためはじく
-							temp =temp.substring(1, 4);
-							break;
-						case 8://「 )」などが紛れている場合があるためはじく
-							temp =temp.substring(1, 5);
-							break;
-						}
+						temp = matcher.group().replace(">", "");
 						if(debag)
 							System.out.println(year+","+(i+1)+","+(j+1)+","+(k+1)+","+temp);
 
 					}else{
-						System.out.println(temp);
+						if(debag)
+							System.out.println(temp);
+
 						temp = "null";
+
 						if(debag){
 							System.out.println("ng");
 							System.out.println(year+","+(i+1)+","+(j+1)+","+(k+1)+","+temp);
 						}
-
 					}
 
 					returnData[count][0] = Integer.toString(year);//year
