@@ -1,8 +1,8 @@
 public class TempratureAnalysis {
 	static boolean debag = false;
 	//1978
-	static int startYear = 2013;
-	static int endYear = 2013;
+	static int startYear = 1978;
+	static int endYear = 1978;
 
 	//埼玉県さいたま市のユニークナンバー
 	static String precNo = "43";
@@ -17,6 +17,8 @@ public class TempratureAnalysis {
 		StoreData store = new StoreData();
 		for(int i=startYear;i<=endYear;i++){
 			store.outputCsv("./data/"+i+".csv", getTemprature.getTemp(i));
+
+			System.out.println( i + ":GET");
 		}
 		System.out.println(System.currentTimeMillis()-start);
 	}

@@ -8,10 +8,10 @@ import java.util.List;
 
 
 class Httpcom{
-	boolean debag=false;
-	HttpURLConnection conn;
+	private boolean debag=false;
+	private HttpURLConnection conn;
 
-	void openWeb(String Url){//open web page
+	public void openWeb(String Url){//open web page
 		try {
 			URL uri=new URL(Url);//create uri
 			conn =(HttpURLConnection)uri.openConnection();
@@ -27,12 +27,12 @@ class Httpcom{
 		}
 	}
 
-	void closeWeb(){//close web page
+	public void closeWeb(){//close web page
 		conn.disconnect();
 	}
 
 	//get web page
-	List<String> getWeb(String url){
+	public List<String> getWeb(String url){
 		openWeb(url);
 		List<String> dataList = new ArrayList<String>();
 		try{
